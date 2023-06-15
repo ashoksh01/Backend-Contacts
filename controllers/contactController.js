@@ -26,7 +26,7 @@ const deleteContact = asyncHandler( async (req, res) => (req, res) => {
   res.status(201).json({ message: `Delete contact for ${req.params.id}` });
 });
 
-module.export = {
+module.exports = {
   getContacts,
   createContact,
   getContact,
