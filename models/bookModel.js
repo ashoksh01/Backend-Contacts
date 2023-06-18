@@ -6,11 +6,11 @@ const bookSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
   },
 
   price: {
-    type: String,
+    type: Number,
     required: true,
   },
 
@@ -35,5 +35,5 @@ const bookSchema = mongoose.Schema({
 });
 
 bookSchema.plugin(validator);
-const Book = mongoose.model('book', bookSchema);
-model.exports = Book;
+const Book = mongoose.model('Book', bookSchema);
+module.exports = Book;

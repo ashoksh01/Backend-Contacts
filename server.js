@@ -8,7 +8,10 @@ const app = express();
 
 const port = process.env.PORT ||  5000;
 app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 app.use("/api/contacts", require("../backend/routes/contactRoutes"));
+app.use("/api/books", require("../backend/routes/bookRoute"));
+app.use("./api/users", require("../backend/routes/userRoute"));
 app.use(errorHandler);
 
 app.listen(port, () =>{

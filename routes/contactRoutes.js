@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getContacts,
   createContact,
-  getContact,
+  getContact, 
   updateContact,
   deleteContact,
 } = require("../controllers/contactController");

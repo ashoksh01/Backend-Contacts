@@ -1,10 +1,11 @@
 const express = require("express");
 const book = require("../models/bookModel");
-const router = new express.Router();
+const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 var fs = require("fs");
 const error = require("../middleware/errorHandler");
+const { addBook, editBook } = require("../controllers/bookController");
 
 // upload book image
 const storage = multer.diskStorage({
@@ -27,69 +28,56 @@ const upload = multer({
 });
 
 // book additions
-router.post("/books", upload.single("image"), async (req, res) => {
-  try {
+router.route("/")
+  // .post(addBook)
+  .post(async(req,res) => {
     const bookData = new book({
       name: req.body.name,
       price: req.body.price,
       authname: req.body.authname,
       category: req.body.category,
       description: req.body.description,
-      image: req.file.filename,
+    //   image: req.file.filename,
     });
     const createBook = await bookData.save();
     res.status(201).send(createBook);
-  } catch (e) {}
-});
+  })
 
 //get all books
-router.get("/books", async (req, res) => {
-    try {
+router.route('/').get(async (req, res) => {
         const getBooks = await book.find({
-            name: req.body.name,
-            price: req.body.price,
-            authname: req.body.authname,
-            category: req.body.category,
-            description: req.body.description,
-            image: req.file.filename,
+            // name: req.body.name,
+            // price: req.body.price,
+            // authname: req.body.authname,
+            // category: req.body.category,
+            // description: req.body.description,
+            // // image: req.file.filename,
 
         });
         res.status(200).send(getBooks);
-    } catch (e) {
 
-    }
 });
 
 //update books
-router.put("/books/:id", async (req, res) => {
-    try {
-        const _id = req.params.id;
-
-        const updateBooks = await book.findByIdAndUpdate(_id, req.body, {
-            new: true,
-        });
-        res.status(200).send(updateBooks);
-    } catch (e) {
-
-    }
-});
+router.route("/:id")
+  // .put(editBook)
+  .put(async(req,res) => {
+    const _id = req.params.id;
+    const existingBook = await book.findById(_id)
+    return res.send(existingBook)
+  })
 
 //delete books
 
-router.delete("/books/:id", async (req, res) => {
-    try {
+router.delete("/:id", async (req, res) => {
+   
         const _id = req.params.id;
         const deleteBooks = await book.findByIdAndDelete(_id);
-        res.status(200).send(deleteBooks);
-    } catch (e) {
-
-    }
-}).catch((e) => {
-
-});
+        res.status(200).send(deleteBooks); 
+   
+})
 
 
 
 
-
-module.exports = express.Router();
+module.exports = router;
