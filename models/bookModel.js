@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-
-
 const validator = require("mongoose-unique-validator")
 const bookSchema = mongoose.Schema({
   name: {

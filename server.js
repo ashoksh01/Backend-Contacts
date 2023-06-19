@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use("/api/contacts", require("../backend/routes/contactRoutes"));
 app.use("/api/books", require("../backend/routes/bookRoute"));
-app.use("./api/users", require("../backend/routes/userRoute"));
+app.use("/api/users", require("../backend/routes/userRoute"));
 app.use(errorHandler);
 
 app.listen(port, () =>{

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongooseUniqueValidator = require('mongoose-unique-validator');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -12,57 +13,40 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    phone: {
-        type: Number,
-        min: 10,
-        required: true,
-        unique: true,
-    },
+
     password: {
         type: String,
         required: true,
         minlength: 3,
     },
-    cpassword: {
-        type: String,
-        required: true,
-        minlength: 3,
-    },
+  
     contactnumber: {
         type: Number,
-        required: true,
+        // required: true,
         min: 10,
     },
 
     admin: {
         type: Boolean,
-        required: true,
+        // required: true,
     },
 
     superadmin: {
         type: Boolean,
-        required: true,
+        // required: true,
     },
 
     address: {
         type: String,
-        required: true,
+        // required: true,
 
     },
-
-    tokens: [{
-        token: {
-            type: String,
-            required: true,
-        }
-    }]
 
 });
 
 
 
 // generating tokens
-
-userSchema.plugin(validator);
+userSchema.plugin(mongooseUniqueValidator);
 const User = mongoose.model('User', userSchema);
 module.exports = User;
